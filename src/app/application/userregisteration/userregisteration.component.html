@@ -1,0 +1,128 @@
+<div class="login-layout">
+    <div class="main-container">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="center">
+                            <h1>
+                                <i class="ace-icon fa fa-leaf green"></i>
+                                <span class="red">Admin </span>
+                                <span class="white" id="id-text2">Panel</span>
+                            </h1>
+                            <h4 class="blue" id="id-company-text">&copy; Company Name</h4>
+                        </div>
+
+                        <div class="space-6"></div>
+
+                        <div class="position-relative">
+                            <div id="login-box" class="login-box visible widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header blue lighter bigger">
+                                            <i class="ace-icon fa fa-coffee green"></i>
+                                            Please Enter Your Information
+                                        </h4>
+
+                                        <div class="space-6"></div>
+
+                                        <div class="space-6"></div>
+                                        <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!isShowPassword">
+                                            <fieldset>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="email" class="form-control" placeholder="Email"
+                                                            formControlName="Email">
+                                                        <i class="ace-icon fa fa-envelope"></i>
+                                                        <div
+                                                            *ngIf="(getControl('Email').invalid && getControl('Email').touched) || getControl('Email').dirty">
+                                                            <small *ngIf="getControl('Email').errors?.required"
+                                                                class="text-danger">Email is
+                                                                required</small>
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <small *ngIf="getControl('Email').errors?.pattern"
+                                                                class="text-danger">Please provide a
+                                                                valid email
+                                                                address</small>
+                                                        </div>
+                                                    </span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Password" formControlName="Password">
+                                                        <i class="ace-icon fa fa-lock"></i>
+                                                        <div
+                                                            *ngIf="(getControl('Password').invalid && getControl('Password').touched) || getControl('Password').dirty">
+                                                            <small *ngIf="getControl('Password').errors?.required"
+                                                                class="text-danger">Password is
+                                                                required</small>
+                                                        </div>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Repeat password"
+                                                            formControlName="RepeatPassword">
+                                                        <i class="ace-icon fa fa-lock"></i>
+                                                        <div
+                                                            *ngIf="(getControl('RepeatPassword').invalid && getControl('RepeatPassword').touched) || getControl('RepeatPassword').dirty">
+                                                            <small *ngIf="getControl('RepeatPassword').errors?.required"
+                                                                class="text-danger">Confirm Password is
+                                                                required</small>
+                                                        </div>
+                                                    </span>
+                                                </label>
+                                                <div class="space-24"></div>
+
+                                                <div class="clearfix">
+                                                    <button type="submit" [disabled]="form.invalid"
+                                                        class="width-65 pull-right btn btn-sm btn-success">
+                                                        <span class="bigger-110">Register</span>
+
+                                                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                                    </button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                        <form [formGroup]="passwordform" (ngSubmit)="UpdatePassword()"
+                                            *ngIf="isShowPassword">
+                                            <fieldset>
+
+
+                                                <div class="space-24"></div>
+
+                                                <div class="clearfix">
+                                                    <button type="submit" [disabled]="passwordform.invalid"
+                                                        class="width-65 pull-right btn btn-sm btn-success">
+                                                        <span class="bigger-110">Update</span>
+
+                                                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                                    </button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div><!-- /.widget-main -->
+
+                                    <div class="toolbar clearfix">
+                                        <div>
+                                            <a href="login" data-target="#forgot-box" class="forgot-password-link">
+                                                <i class="ace-icon fa fa-arrow-left"></i>
+                                                Back to Login
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div><!-- /.widget-body -->
+                            </div><!-- /.login-box -->
+
+
+                        </div><!-- /.position-relative -->
+
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.main-content -->
+    </div><!-- /.main-container -->
+</div>

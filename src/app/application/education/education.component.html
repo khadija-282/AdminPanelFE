@@ -1,0 +1,201 @@
+<div class="page-content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="page-header">
+        <h1>
+          Education
+          <div style="float: right;">
+            <small>
+              <button class="btn btn-sm btn-light no-hover" (click)="onAdd()">Add</button>
+            </small>
+          </div>
+        </h1>
+      </div>
+      <table datatable class="table row-border hover" *ngIf="listeducation!=undefined &&!isAdd">
+        <thead>
+          <tr>
+            <th>Passing Year</th>
+            <th>School</th>
+            <th>Degree</th>
+            <th>Total Marks</th>
+            <th>Marks Obtained</th>
+            <th>Percentage</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ed of listeducation">
+            <td>{{ed.PassingYear}}</td>
+            <td>{{ed.School}}</td>
+            <td>{{ed.DegreeTitle}}</td>
+            <td>{{ed.TotalMarks}}</td>
+            <td>{{ed.MarksObtained}}</td>
+            <td>{{ed.Percentage}}</td>
+            <td> <span class="label label-sm label-success" id="about" *ngIf="!ed.isActive">Complete</span>
+              <span class="label label-sm label-danger" id="about" *ngIf="ed.isActive">In
+                Complete</span></td>
+            <td>
+              <button class="label label-sm label-primary no-hover" (click)="onUpdate(ed)">Edit</button>
+            </td>
+            <td>
+              <button class="label label-sm label-grey no-hover" (click)="ActiveInactive(ed)">Active/Inactive</button>
+            </td>
+            <td>
+              <button class="label label-sm label-danger no-hover" (click)="Delete(ed)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div>
+
+<div class="row" *ngIf="isAdd">
+  <div class="col-xs-12">
+    <!-- PAGE CONTENT BEGINS -->
+    <form class="form-horizontal" role="form" [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="form-group" style="display: none;">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> </label>
+
+        <div class="col-sm-7">
+          <input type="text" id="form-field-1" formControlName="ProfileId" placeholder="Degree Title"
+            class="col-xs-10 col-sm-5">
+
+        </div>
+      </div>
+      <div class="form-group" style="display: none;">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> </label>
+
+        <div class="col-sm-7">
+          <input type="text" id="form-field-1" formControlName="Id" placeholder="Degree Title"
+            class="col-xs-10 col-sm-5">
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Degree Title </label>
+
+        <div class="col-sm-7">
+          <input type="text" id="form-field-1" formControlName="DegreeTitle" placeholder="Degree Title"
+            class="col-xs-10 col-sm-5">
+          <div *ngIf="(getControl('DegreeTitle').invalid &&
+            getControl('DegreeTitle').touched) ||
+            getControl('DegreeTitle').dirty">
+            <small *ngIf="getControl('DegreeTitle').errors?.required" class="text-danger">Degree Title
+              is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> School
+        </label>
+
+        <div class="col-sm-7">
+          <input type="text" id="form-field-1-1" formControlName="School" placeholder="Text Field" class="form-control">
+          <div *ngIf="(getControl('School').invalid &&
+            getControl('School').touched) || getControl('School').dirty">
+            <small *ngIf="getControl('School').errors?.required" class="text-danger">School
+              is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Passing Year
+        </label>
+
+        <div class="col-sm-7 ng-autocomplete">
+          <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)' name='PassingYear'
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [initialValue]="">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.value"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Total Marks
+        </label>
+
+        <div class="col-sm-7">
+          <input type="number" id="form-field-1-1" formControlName="TotalMarks" placeholder="Total Marks"
+            class="form-control" (change)="onChange($event)">
+          <div *ngIf="(getControl('TotalMarks').invalid &&
+            getControl('TotalMarks').touched) ||
+            getControl('TotalMarks').dirty">
+            <small *ngIf="getControl('TotalMarks').errors?.required" class="text-danger">Total Marks
+              is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Marks Obtained
+        </label>
+
+        <div class="col-sm-7">
+          <input type="number" id="form-field-1-1" formControlName="MarksObtained" placeholder="Marks Obtained"
+            class="form-control" (change)="onChange($event)">
+          <div *ngIf="(getControl('MarksObtained').invalid &&
+            getControl('MarksObtained').touched) ||
+            getControl('MarksObtained').dirty">
+            <small *ngIf="getControl('MarksObtained').errors?.required" class="text-danger">Marks Obtained
+              is required</small>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Percentage
+        </label>
+
+        <div class="col-sm-7">
+          <input type="number" id="form-field-1-1" formControlName="Percentage" placeholder="Percentage"
+            class="form-control">
+          <div *ngIf="(getControl('Percentage').invalid &&
+            getControl('Percentage').touched) ||
+            getControl('Percentage').dirty">
+            <small *ngIf="getControl('Percentage').errors?.required" class="text-danger">Percentage
+              is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Currently Studying
+        </label>
+
+        <div class="col-xs-3">
+          <label>
+            <input name="switch-field-1" class="ace ace-switch" type="checkbox" formControlName="isActive">
+            <span class="lbl"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+          <button class="btn btn-info" type="submit" [disabled]="form.invalid">
+            <i class="ace-icon fa fa-check bigger-110"></i>
+            Submit
+          </button>
+
+          &nbsp; &nbsp; &nbsp;
+          <button class="btn" type="reset" (click)="onCancel()">
+            <i class="ace-icon fa fa-undo bigger-110"></i>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
